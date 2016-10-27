@@ -1,5 +1,6 @@
 {
     "checkDBContent": "SELECT * FROM images",
     "addImage": "INSERT INTO images (url, title, description) VALUES ($1, $2, $3) RETURNING id",
-    "initialImageLoad": "SELECT * FROM images ORDER BY time_added DESC LIMIT 10"
+    "initialImageLoad": "SELECT * FROM images ORDER BY time_added DESC LIMIT 12",
+    "getImage": "SELECT * FROM images WHERE id=$1"
 }
