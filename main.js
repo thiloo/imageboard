@@ -26,18 +26,28 @@ var uploader = multer({
 
 app.use(bodyParser.json());
 app.get('/images', function(req, res){
-    client.client(query.initialImageLoad)
+    console.log(req.query);
+    client.client(query.initialImageLoad, [JSON.parse(req.query.limit)])
         .then(function(images){
+            console.log(images);
             res.json(images);
         });
 });
-app.get('/image/:imageName', function(req, res){
-    var image = req.url.split('/').pop();
-    client.client(query.getImage, [image])
+app.get('/image/:imageID', function(req, res){
+    var id = req.url.split('/').pop();
+    client.client(query.getImage, [id])
         .then(function(response){
             res.json(response);
         });
 });
+app.get('/comments/:imageID', function(req, res){
+    var id = req.url.split('/').pop();
+    client.client(query.getComments, [id])
+        .then(function(response){
+            res.json(response);
+        });
+});
+
 app.post('/upload', uploader.single('file'), function(req, res){
     if (req.file) {
         res.json({
@@ -66,6 +76,37 @@ app.post('/store', function(req, res){
             });
         });
 });
+app.post('/addcomment', function(req, res){
+    client.client(query.addComment, [req.body.image_id, req.body.name, req.body.comment, req.body.type])
+        .then(function(id){
+            res.json({
+                success: true,
+                id : id.rows[0].id,
+                comment_id: id.rows[0].comment_id
+            });
+        });
+});
+app.put('/addcomment', function(req, res){
+    client.client(query.changeComment, [req.body.id])
+        .then(function(id){
+            console.log('success');
+        });
+});
 
+app.post('/replycomment', function(req, res){
+    console.log(req.body);
+    client.client(query.replyComment, [req.body.comment_id, req.body.image_id, req.body.name, req.body.comment, req.body.type])
+        .then(function(id){
+            console.log(id);
+            res.json({
+                success: true,
+                id : id.rows[0].id,
+                comment_id: id.rows[0].comment_id
+            });
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+});
 app.use(express.static('public'));
 app.listen(8080);
