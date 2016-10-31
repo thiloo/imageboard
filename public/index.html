@@ -12,11 +12,65 @@
         </div>
         <div id="main">
         </div>
+
         <script type="text/handlebars" id="images">
-        <div class="imageContainer">
-            <img src="{{url}}" />
-        </div>
+            <div class="flexContainer" id="flexHolder">
+            {{#each this}}
+            <div class="imageContainer">
+                <a href="/#image/{{id}}"><img class="image" id="{{id}}" src="{{url}}" />
+                <div class="info"><h3 class="title">{{title}}</h3><br /><p class="description">{{description}}</p></div>
+                </a>
+            </div>
+            {{/each}}
+            <button id="loadMore">Load More</button></div>
         </script>
+
+        <script type="text/handlebars" id="singleImageView">
+            {{#this}}
+            <div class="singleImageFlex">
+            <div class="singleImageContainer" id="singleImageContainer">
+                <img class="singleImage" src="{{url}}" /><br /><h2 class="singleTitle">{{title}}</h2><p class="singleDescription">{{description}}</p>
+                <div id="comments"></div>
+            </div></div>
+            {{/this}}
+        </script>
+
+        <script type="text/handlebars" id="commentsView">
+            <form class="commentForm">
+                <input type="text" required placeholder="Name" class="commentField" id="nameInput"/>
+                <input type="text" required placeholder="Comment" class="commentField" id="commentInput"/>
+                <input type="button" name="name" value="Submit Comment" id="submitButton">
+            </form>
+            <div id="commentList">
+            {{#each this}}
+                <div class="{{type}}"  id="{{id}}">
+                    <h3 class="title">{{name}}</h3><br />
+                    <p class="description">{{comment}}</p>
+                    <button type="button" class="replyButton" >Reply</button>
+                    <div class="replies"></div>
+                </div>
+
+            {{/each}}
+            </div>
+        </script>
+
+        <script type="text/handlbars" id="replyBox">
+            <div class="commentFormContainer">
+            <form class="commentForm" id="replyComment">
+            <input type="text" required placeholder="Name" class="commentField" id="replyNameInput"/>
+            <input type="text" required placeholder="Comment" class="commentField" id="replyCommentInput"/>
+            <input type="button" name="name" value="Submit Comment" id="submitReplyButton">
+            </form></div>
+        </script>
+
+        <script type="text/handlbars" id="uploadForm">
+            <form class="upload"><input type="text" placeholder="title" id="titleInput">
+            <input type="text" placeholder="description" id="descriptionInput">
+            <input type="text" placeholder="tags" id="tagsInput">
+            <input type="file"><input type="button" name="submit" value="Submit" id="submit">
+            </form>
+        </script>
+
         <script src="js/handlebars.min.js"></script>
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/underscore-min.js"></script>

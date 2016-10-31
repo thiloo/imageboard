@@ -108,6 +108,7 @@ body {
     width: auto;
     float: inherit;
     display: block;
+
 }
 
 .comment {
@@ -127,4 +128,24 @@ body {
     margin-top: -20px;
     background: red;
     float: right;
+}
+
+.commentFormContainer {
+    width: auto;
+    height: 60px;
+    background-color: blue;
+    display: block;
+}
+
+.commentForm {
+    display: block;
+}
+
+#loadMore {
+    display: block;
+    background-color: #F5A623;
+    color: #0000FF;
+    width: 40%;
+    margin: 0 auto;
+    height: 50px;
 }

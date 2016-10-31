@@ -4,5 +4,6 @@ CREATE TABLE images(
     time_added TIMESTAMP default current_timestamp,
     url VARCHAR(255) NOT NULL,
     title VARCHAR(255),
-    description VARCHAR(255)
+    description VARCHAR(255),
+    tags VARCHAR(255)
 );
