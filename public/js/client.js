@@ -1,7 +1,7 @@
 (function() {
     var templates = document.querySelectorAll('script[type="text/handlebars"]');
     Handlebars.templates = Handlebars.templates || {};
-    Array.prototype.slice.call(templates).forEach(function(script) {
+    Array.prototype.slice.call(templates).forEach((script) => {
         Handlebars.templates[script.id] = Handlebars.compile(script.innerHTML);
     });
 
@@ -14,13 +14,13 @@
             'upload': 'upload',
             'tags/:tagname': 'tags'
         },
-        innitial: function() {
+        innitial() {
             new UsersView({
                 model: new LoadModel,
                 el: '#main'
             });
         },
-        image: function(id) {
+        image(id) {
             new ImageView({
                 model: new ImageModel({
                     id: id
@@ -28,13 +28,13 @@
                 el: '#main'
             });
         },
-        upload: function() {
+        upload() {
             new UploadView({
                 model: new UploadModel,
                 el: '#main'
             });
         },
-        tags: function(tagname) {
+        tags(tagname) {
             new UsersView({
                 model: new TagModel({
                     tagname: tagname
@@ -45,30 +45,24 @@
     });
 
     var LoadModel = Backbone.Model.extend({
-        initialize: function() {
-            this.fetch();
-        },
-        url: function(){return '/images?' + $.param({limit: loadCount, offset: loadCount-12});},
+        initialize() {this.fetch();},
+        url() {return'/images?' + $.param({limit: loadCount, offset: loadCount-12});}
     });
 
     var ImageModel = Backbone.Model.extend({
         baseUrl: '/image',
-        url: function() {return this.baseUrl + '/' + this.id;},
-        initialize: function() {
-            this.fetch('id');
-        }
+        url() {return this.baseUrl + '/' + this.id;},
+        initialize() {this.fetch('id');}
     });
 
     var TagModel = Backbone.Model.extend({
         baseUrl: '/tags',
-        url: function() {return this.baseUrl + '/' + this.attributes.tagname;},
-        initialize: function() {
-            this.fetch('tagname');
-        }
+        url() {return this.baseUrl + '/' + this.attributes.tagname;},
+        initialize() {this.fetch('tagname');}
     });
 
     var UploadModel = Backbone.Model.extend({
-        upload: function(data) {
+        upload(data) {
             var load = this;
             $.ajax({
                 url: '/upload',
@@ -76,12 +70,10 @@
                 data: data.file,
                 processData: false,
                 contentType: false,
-                success: function(path) {
+                success(path) {
                     data.url = path;
-                    load.save(data,
-                        {success: function(id) {
-                            router.navigate('/image/'+id.id, true);
-                        }
+                    load.save(data, {
+                        success(id) {return router.navigate('/image/' + id.id, true);}
                     });
                 }
             });
@@ -93,18 +85,16 @@
 
     var CommentsModel = Backbone.Model.extend({
         baseUrl: '/comments',
-        url: function() {return this.baseUrl + '/' + this.id;},
-        initialize: function() {
-            this.fetch('id');
-        }
+        url() {return this.baseUrl + '/' + this.id;},
+        initialize() {this.fetch('id');}
     });
 
     var AddCommentModel = Backbone.Model.extend({
-        add: function(data){
+        add(data) {
             var view = this;
             this.save(data, {
                 type: 'POST',
-                success: function(data){
+                success(data) {
                     view.save(data.attributes.id, {
                         type: 'PUT'
                     });
@@ -115,7 +105,7 @@
     });
 
     var ReplyCommentModel = Backbone.Model.extend({
-        reply: function(data) {
+        reply(data) {
             this.save(data, {
                 type: 'POST'
             });
@@ -124,53 +114,47 @@
     });
 
     var UsersView = Backbone.View.extend({
-        initialize: function() {
+        events: {
+            'mouseenter .imageContainer': 'boxMouseOver',
+            'mouseleave .imageContainer': 'boxMouseOut',
+            'click #loadMore' : 'loadMore'
+        },
+        initialize() {
             this.render();
             var view = this;
-            this.model.on('change', function() {
-                view.render();
-            });
+            this.model.on('change', () => view.render());
         },
-        render: function() {
+        render() {
             var images = this.model.attributes.rows;
             if (!images) {
-                this.$el.html('loading!');
-                return;
+                return this.$el.html('loading!');
             }
             this.$el.html(Handlebars.templates.images(images));
         },
-        boxMouseOver: function(e) {
+        boxMouseOver(e) {
             var target = e.target.nextElementSibling;
-            console.log(target);
             $(target).css('z-index', '5');
         },
-        boxMouseOut: function(e) {
+        boxMouseOut(e) {
             var target = e.target.nextElementSibling;
             $(target).css('z-index', '-5');
         },
-        loadMore:  function() {
+        loadMore() {
             loadCount += 12;
             new MoreView({
                 model: new LoadModel,
                 el: '#main'
             });
-        },
-        events: {
-            'mouseenter .imageContainer': 'boxMouseOver',
-            'mouseleave .imageContainer': 'boxMouseOut',
-            'click #loadMore' : 'loadMore'
         }
     });
 
     var MoreView = Backbone.View.extend({
-        initialize: function() {
-            this.render();
+        initialize() {
             var view = this;
-            this.model.on('change', function(){
-                view.render();
-            });
+            this.render();
+            this.model.on('change', () => view.render());
         },
-        render: function() {
+        render() {
             var images = this.model.attributes.rows;
             if (!images) {
                 return;
@@ -181,18 +165,15 @@
     });
 
     var ImageView = Backbone.View.extend({
-        initialize: function() {
-            this.render();
+        initialize() {
             var view = this;
-            this.model.on('change', function() {
-                view.render();
-            });
+            this.render();
+            this.model.on('change', () => view.render());
         },
-        render: function() {
+        render() {
             var image = this.model.attributes.rows;
             if (!image) {
-                this.$el.html('Loading!');
-                return;
+                return this.$el.html('Loading!');
             }
             this.$el.html(Handlebars.templates.singleImageView(image));
             new CommentsView({
@@ -208,14 +189,12 @@
     });
 
     var UploadView = Backbone.View.extend({
-        initialize: function() {
-            this.render();
+        initialize() {
             var view = this;
-            this.model.on('change', function(){
-                view.render();
-            });
+            this.render();
+            this.model.on('change', () => view.render());
         },
-        render : function(){
+        render() {
             var html = '<form class="upload"><input type="text" placeholder="title" id="titleInput"><input type="text" placeholder="description" id="descriptionInput"><input type="text" placeholder="tags" id="tagsInput"><input type="file"><input type="button" name="submit" value="Submit" id="submit"></form>';
             this.$el.html(html);
 
@@ -223,85 +202,71 @@
         events: {
             'click #submit': 'upload'
         },
-        upload: function(){
-            var file = $('input[type="file"]').get(0).files[0];
-            var title = $('#titleInput').val();
-            var description = $('#descriptionInput').val();
-            var tags = JSON.stringify($('#tagsInput').val().replace(/\, /g, ',').split(','));
-            console.log(tags);
-            var formData = new FormData();
+        upload() {
+            var file = $('input[type="file"]').get(0).files[0],
+                title = $('#titleInput').val(),
+                description = $('#descriptionInput').val(),
+                tags = JSON.stringify($('#tagsInput').val().replace(/\, /g, ',').split(',')),
+                formData = new FormData();
             formData.append('file', file);
             this.model.upload({
+                title, description,
                 file: formData,
-                title: title,
-                description: description,
                 tags: tags || []
             });
         }
     });
 
     var CommentsView = Backbone.View.extend({
-        initialize: function(options) {
-            this.commentModel = options.commentModel;
-            this.replyModel = options.replyModel;
-
-            this.render();
-            var view = this;
-            this.model.on('change', function() {
-                view.render();
-            });
-        },
-        render: function(){
-            var comments = this.model.attributes.rows;
-            if (!comments) {
-                this.$el.html('Loading!');
-                return;
-            }
-            this.$el.html(Handlebars.templates.commentsView(comments));
-        },
-
-        //add comments enter
         events: {
             'click #submitReplyButton':'reply',
             'click #submitButton': 'comment',
             'click .replyButton': 'replyField'
         },
-        comment: function(){
-            console.log('clicked');
-            var name = $('#nameInput').val();
-            var comment = $('#commentInput').val();
+        initialize(options) {
+            var view = this;
+            this.commentModel = options.commentModel;
+            this.replyModel = options.replyModel;
+            this.render();
+            this.model.on('change', () => view.render());
+        },
+        render() {
+            var comments = this.model.attributes.rows;
+            if (!comments) {
+                return this.$el.html('Loading!');
+            }
+            this.$el.html(Handlebars.templates.commentsView(comments));
+        },
+        comment() {
+            var name = $('#nameInput').val(),
+                comment = $('#commentInput').val(),
+                view = this;
             this.commentModel.add({
+                name, comment,
                 image_id: this.id,
-                name: name,
-                comment: comment,
                 type: 'comment'
             });
-            var view = this;
             this.model.fetch();
-            this.model.on('change', function() {
-                view.render();
-            });
+            this.model.on('change', () => view.render());
         },
-        reply: function(e){
-            var parent = $(e.target).parents()[2];
-            var name = $('#replyNameInput').val();
-            var comment =  $('#replyCommentInput').val();
+        reply(e) {
+            var parent = $(e.target).parents()[2],
+                name = $('#replyNameInput').val(),
+                comment =  $('#replyCommentInput').val(),
+                view = this;
             this.replyModel.reply({
+                name, comment,
                 comment_id: $(parent).attr('id'),
                 image_id: this.id,
-                name: name,
-                comment: comment,
                 type: 'replyComment'
             });
             this.model.fetch();
-            var view = this;
             this.model.on('change', () => view.render());
         },
-        replyField: function(e){
+        replyField(e) {
 
-            var target = $(e.target.nextElementSibling);
-            console.log(target);
-            var html = $(target).html();
+            var target = $(e.target.nextElementSibling),
+                html = $(target).html();
             html += '<div class="commentFormContainer"><form class="commentForm" id="replyComment"><input type="text" required placeholder="Name" class="commentField" id="replyNameInput"/><input type="text" required placeholder="Comment" class="commentField" id="replyCommentInput"/><input type="button" name="name" value="Submit Comment" id="submitReplyButton"></form></div>';
             $(target).html(html);
         }

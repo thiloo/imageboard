@@ -1,7 +1,7 @@
 var secret = require('../passwords.json');
 
-module.exports.dbUrl = function() {
-    return new Promise(function(resolve, reject) {
+module.exports.dbUrl = () => {
+    return new Promise((resolve, reject) => {
         var dbUrl = process.env.DATABASE_URL || 'postgress://' + secret.user + ':' + secret.password + '@localhost/imageboard';
         dbUrl = require('url').parse(dbUrl);
         var dbUser = dbUrl.auth.split(':');
@@ -15,9 +15,6 @@ module.exports.dbUrl = function() {
             idleTimoutMillis: 30000
         };
         resolve(dbConfig)
-        .catch(function(reason) {
-            console.log(reason);
-            reject(reason);
-        });
+        .catch((reason) => reject(reason));
     });
 };
