@@ -43,13 +43,11 @@ app.get('/images', (req, res) => {
 });
 app.get('/image/:imageID', (req, res) => {
     var id = req.url.split('/').pop();
-
     client.client(query.getImage, [id])
         .then((response) => res.json(response));
 });
 app.get('/comments/:imageID', (req, res) => {
     var id = req.url.split('/').pop();
-
     client.client(query.getComments, [id])
         .then((response) => res.json(response));
 });
@@ -57,11 +55,10 @@ app.get('/tags/:tagname', (req, res) => {
     var tag = req.url.split('/').pop();
     client.client(query.getTags, [tag])
         .then((response) => {
-            var images = JSON.stringify(response.rows.map((image) => JSON.parse(image.image_id))),
-                q = 'SELECT * FROM images WHERE id IN ' + images;
+            var images = JSON.stringify(response.rows.map((image) => JSON.parse(image.image_id)));
             images = images.replace('[', '(');
             images = images.replace(']', ')');
-
+            var q = 'SELECT * FROM images WHERE id IN ' + images;
             client.client(q)
             .then((images) => res.json(images))
             .catch((error) => console.log(error));
@@ -80,20 +77,18 @@ app.post('/upload', uploader.single('file'), (req, res) => {
     }
 });
 app.post('/store', (req, res) => {
-    var {title, description, tags} = req.body;
-    client.client(query.addImage, [req.body.url.file, title, description, tags])
-        .then((id) => {
+    client.client(query.addImage, [req.body.url.file, req.body.title, req.body.description, req.body.tags])
+        .then(function (id) {
             res.json({
                 succes: true,
                 id: id.rows[0].id
             });
-            tags.map((tag)=>client.client(query.addTag, [tag, id.rows[0].id]));
+            JSON.parse(req.body.tags).map((tag) => client.client(query.addTag, [tag, id.rows[0].id]));
         })
         .catch((error) => res.json({error, success: false}));
 });
 app.post('/addcomment', (req, res) => {
-    var {image_id, name, comment, type} = req.body;
-    client.client(query.addComment, [image_id, name, comment, type])
+    client.client(query.addComment, [req.body.image_id, req.body.name, req.body.comment, req.body.type])
         .then((id) => {
             res.json({
                 success: true,
@@ -115,8 +110,7 @@ app.put('/addcomment', (req, res) => {
 });
 
 app.post('/replycomment', (req, res) => {
-    var {comment_id, image_id, name, comment, type} = req.body;
-    client.client(query.replyComment, [comment_id, image_id, name, comment, type])
+    client.client(query.replyComment, [req.body.comment_id, req.body.image_id, req.body.name, req.body.comment, req.body.type])
         .then((id) => {
             res.json({
                 success: true,

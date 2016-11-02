@@ -1,4 +1,4 @@
-(function() {
+(() => {
     var templates = document.querySelectorAll('script[type="text/handlebars"]');
     Handlebars.templates = Handlebars.templates || {};
     Array.prototype.slice.call(templates).forEach((script) => {
@@ -22,9 +22,7 @@
         },
         image(id) {
             new ImageView({
-                model: new ImageModel({
-                    id: id
-                }),
+                model: new ImageModel({id}),
                 el: '#main'
             });
         },
@@ -36,17 +34,15 @@
         },
         tags(tagname) {
             new UsersView({
-                model: new TagModel({
-                    tagname: tagname
-                }),
+                model: new TagModel({tagname}),
                 el: '#main'
             });
         }
     });
 
     var LoadModel = Backbone.Model.extend({
-        initialize() {this.fetch();},
-        url() {return'/images?' + $.param({limit: loadCount, offset: loadCount-12});}
+        url() {return'/images?' + $.param({limit: loadCount, offset: loadCount-12});},
+        initialize() {this.fetch();}
     });
 
     var ImageModel = Backbone.Model.extend({
@@ -129,7 +125,10 @@
             if (!images) {
                 return this.$el.html('loading!');
             }
-            this.$el.html(Handlebars.templates.images(images));
+            this.$el.html(Handlebars.templates.images({
+                images,
+                button: images.length > 10
+            }));
         },
         boxMouseOver(e) {
             var target = e.target.nextElementSibling;
@@ -160,7 +159,10 @@
                 return;
             }
             $('#loadMore').remove();
-            $('#flexHolder').append(Handlebars.templates.images(images));
+            $('#flexHolder').append(Handlebars.templates.images({
+                images,
+                button: images.length > loadCount - 1
+            }));
         }
     });
 
@@ -175,6 +177,7 @@
             if (!image) {
                 return this.$el.html('Loading!');
             }
+            image[0].newTags = JSON.parse(image[0].tags);
             this.$el.html(Handlebars.templates.singleImageView(image));
             new CommentsView({
                 model: new CommentsModel({
@@ -195,9 +198,7 @@
             this.model.on('change', () => view.render());
         },
         render() {
-            var html = '<form class="upload"><input type="text" placeholder="title" id="titleInput"><input type="text" placeholder="description" id="descriptionInput"><input type="text" placeholder="tags" id="tagsInput"><input type="file"><input type="button" name="submit" value="Submit" id="submit"></form>';
-            this.$el.html(html);
-
+            this.$el.html(Handlebars.templates.uploadForm());
         },
         events: {
             'click #submit': 'upload'
@@ -250,7 +251,7 @@
             this.model.on('change', () => view.render());
         },
         reply(e) {
-            var parent = $(e.target).parents()[2],
+            var parent = $(e.target).parents()[3],
                 name = $('#replyNameInput').val(),
                 comment =  $('#replyCommentInput').val(),
                 view = this;
@@ -264,11 +265,8 @@
             this.model.on('change', () => view.render());
         },
         replyField(e) {
-
-            var target = $(e.target.nextElementSibling),
-                html = $(target).html();
-            html += '<div class="commentFormContainer"><form class="commentForm" id="replyComment"><input type="text" required placeholder="Name" class="commentField" id="replyNameInput"/><input type="text" required placeholder="Comment" class="commentField" id="replyCommentInput"/><input type="button" name="name" value="Submit Comment" id="submitReplyButton"></form></div>';
-            $(target).html(html);
+            var target = $(e.target.nextElementSibling);
+            $(target).html(Handlebars.templates.replyBox());
         }
     });
     var router = new Router();
