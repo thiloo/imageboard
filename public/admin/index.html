@@ -1,1 +1,32 @@
-<h3>Admin</h3>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Incredible Images Admin</title>
+        <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="admin.js"></script>
+    </head>
+    <body ng-app="adminApp">
+        <div ng-controller="imageList">
+            <div ng-repeat="image in images" id="image-{{image.id}}" class="contentContainer">
+                <img src="{{image.url}}" class="adminImage" />
+                <div class="textContainer">
+                    Title: <br /><input type="text" value="{{image.title}}" /> <br />
+                    Description: <br /><input type="text" value="{{image.description}}" /> <br />
+                    <button class="updateButton" ng-click="updateText($event)">Update</button>
+                    <button class="deleteButton" ng-click="deleteImage($event)">Delete</button>
+                </div>
+                <div class="commentsContainer">
+                    <ul>
+                        <li ng-repeat="comment in comments" ng-if="comment.image_id === image.id" id="comment-{{comment.id}}" class="comment">
+                            <input value="{{comment.comment}}" />
+                            <button class="updateButton" ng-click="updateComment($event)">Update</button>
+                            <button class="deleteButton" ng-click="deleteComment($event)">Delete</button>
+                    </ul>
+                </div>
+            </div>
+            <button class="loadMoreButton" ng-click="load()">Load More</button>
+        </div>
+    </body>
+</html>

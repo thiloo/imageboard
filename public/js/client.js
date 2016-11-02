@@ -248,7 +248,10 @@
                 type: 'comment'
             });
             this.model.fetch();
-            this.model.on('change', () => view.render());
+            this.model.on('change', () => {
+                view.render();
+                console.log("changed");
+            });
         },
         reply(e) {
             var parent = $(e.target).parents()[3],

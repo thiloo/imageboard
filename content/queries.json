@@ -8,5 +8,10 @@
     "getTags": "SELECT * FROM tags WHERE tag=$1 ORDER BY id DESC",
     "addComment": "INSERT INTO comments (image_id, name, comment, type) VALUES ($1, $2, $3, $4) RETURNING id, comment_id",
     "changeComment": "UPDATE comments SET comment_id = $1 WHERE id = $1",
-    "replyComment": "INSERT INTO comments (comment_id, image_id, name, comment, type) VALUES ($1, $2, $3, $4, $5) RETURNING id, comment_id"
+    "replyComment": "INSERT INTO comments (comment_id, image_id, name, comment, type) VALUES ($1, $2, $3, $4, $5) RETURNING id, comment_id",
+    "deleteImage" : "DELETE FROM images WHERE id=$1 RETURNING id",
+    "updateImage": "UPDATE images SET title = $2, description = $3 WHERE id = $1 RETURNING id, title, description",
+    "getCommentsAdmin": "SELECT * FROM comments WHERE image_id BETWEEN $1 AND $2",
+    "updateComment": "UPDATE comments SET comment = $2 WHERE id = $1 RETURNING id, comment",
+    "deleteComment" : "DELETE FROM comments WHERE id=$1 RETURNING id"
 }

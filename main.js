@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.use('/admin', auth);
 app.get('/images', (req, res) => {
     client.client(query.initialImageLoad, [req.query.limit, req.query.offset])
-        .then((images) => res.json(images));
+        .then(images => res.json(images));
 });
 app.get('/image/:imageID', (req, res) => {
     var id = req.url.split('/').pop();
@@ -120,5 +120,37 @@ app.post('/replycomment', (req, res) => {
         })
         .catch((error) => res.json({error, success: false}));
 });
+
+app.delete('/admin/image/:imageID', (req, res) => {
+    var id = req.url.split('/').pop();
+    client.client(query.deleteImage, [id])
+        .then((response) => res.json({response, success: true}));
+});
+
+app.put('/admin/image/:imageID', (req, res) => {
+    var id = req.url.split('/').pop();
+    client.client(query.updateImage, [id, req.body.title, req.body.description])
+        .then((response) => res.json({response, success: true}));
+});
+
+app.get('/admin/comments', (req, res) => {
+    client.client(query.getCommentsAdmin, [req.query.offset, req.query.limit])
+        .then(images => res.json(images))
+        .catch(error => console.log(error));
+});
+
+app.put('/admin/comment/:commentID', (req, res) => {
+    var id = req.url.split('/').pop();
+    client.client(query.updateComment, [id, req.body.comment])
+        .then((response) => res.json({response, success: true}));
+});
+
+app.delete('/admin/comment/:commentID', (req, res) => {
+    var id = req.url.split('/').pop();
+    client.client(query.deleteComment, [id])
+        .then((response) => res.json({response, success: true}))
+        .catch(error => console.log(error));
+});
+
 app.use(express.static('public'));
 app.listen(8080);
