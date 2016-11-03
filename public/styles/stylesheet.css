@@ -23,7 +23,7 @@ body {
     margin-left: 20px;
 }
 
-#uploadButton {
+#uploadLogo {
     height: 40px;
     float: right;
     margin-right: 20px;
@@ -148,4 +148,24 @@ body {
     width: 40%;
     margin: 0 auto;
     height: 50px;
+}
+
+.uploadButton {
+    display: block;
+    background-color: #F5A623;
+    color: #0000FF;
+    margin: 0 auto;
+    height: 50px;
+    width: 100px;
+}
+
+.upload {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.uploadField {
+    width: 150px;
+    height: 20px;
+    margin: 10px;
 }

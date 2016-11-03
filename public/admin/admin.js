@@ -7,22 +7,33 @@
             $http.get('/images',{
                 params: {
                     limit: loadCount,
-                    offset: 0
+                    offset: loadCount - 12
                 }})
                 .then(images => {
                     loadCount += 12;
-                    $scope.images = images.data.rows;
+                    if (!$scope.images) {
+                        $scope.images = images.data.rows;
+                    } else {
+                        $scope.images = $scope.images.concat(images.data.rows);
+                    }
                     $http.get('/admin/comments', {
+                        // get the comments relating to the loaded images 
                         params: {
                             limit: images.data.rows[0].id,
                             offset: images.data.rows[11].id
                         }
                     })
-                    .then(comments => $scope.comments = comments.data.rows);
+                    .then(comments => {
+                        if (!$scope.comments) {
+                            $scope.comments = comments.data.rows;
+                        } else {
+                            $scope.comments = $scope.comments.concat(comments.data.rows);
+                        }
+                    });
                 });
         };
         $scope.load();
-        
+
         $scope.deleteImage = ($event) => {
             var parent = $event.path[2];
             $http.delete('/admin/image/'+parent.id.replace('image-', '')).then(() => parent.remove());

@@ -8,7 +8,7 @@
     <body>
         <div id="header">
             <a href="/"><img src="/media/logo.png" id="logo" /></a>
-            <a href="/#upload"><img src="/media/uploadbutton2.png" id="uploadButton" /></a>
+            <a href="/#upload"><img src="/media/uploadbutton2.png" id="uploadLogo" /></a>
         </div>
         <div id="main">
         </div>
@@ -73,11 +73,11 @@
 
         <script type="text/handlebars" id="uploadForm">
             <form class="upload">
-                <input type="text" placeholder="title" id="titleInput">
-                <input type="text" placeholder="description" id="descriptionInput">
-                <input type="text" placeholder="tags" id="tagsInput">
-                <input type="file">
-                <input type="button" name="submit" value="Submit" id="submit">
+                <input type="text" placeholder="title" class="uploadField" id="titleInput"> <br />
+                <input type="text" placeholder="description" class="uploadField" id="descriptionInput"> <br />
+                <input type="text" placeholder="tags" class="uploadField" id="tagsInput"> <br />
+                <input type="file" class="uploadField"> <br />
+                <input type="button" name="submit" value="Submit" class="uploadButton" id="submit"> <br />
             </form>
         </script>
 

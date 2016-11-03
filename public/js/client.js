@@ -15,7 +15,7 @@
             'tags/:tagname': 'tags'
         },
         innitial() {
-            new UsersView({
+            new StartView({
                 model: new LoadModel,
                 el: '#main'
             });
@@ -33,7 +33,7 @@
             });
         },
         tags(tagname) {
-            new UsersView({
+            new StartView({
                 model: new TagModel({tagname}),
                 el: '#main'
             });
@@ -109,10 +109,11 @@
         url: '/replycomment'
     });
 
-    var UsersView = Backbone.View.extend({
+    var StartView = Backbone.View.extend({
         events: {
-            'mouseenter .imageContainer': 'boxMouseOver',
-            'mouseleave .imageContainer': 'boxMouseOut',
+            'mouseenter .imageContainer': 'infoBoxMouseEnter',
+            'mouseleave .imageContainer': 'infoBoxMouseLeave',
+            'mouseleave .info': 'textBoxMouseLeave',
             'click #loadMore' : 'loadMore'
         },
         initialize() {
@@ -130,12 +131,16 @@
                 button: images.length > 10
             }));
         },
-        boxMouseOver(e) {
+        infoBoxMouseEnter(e) {
             var target = e.target.nextElementSibling;
             $(target).css('z-index', '5');
         },
-        boxMouseOut(e) {
+        infoBoxMouseLeave(e) {
             var target = e.target.nextElementSibling;
+            $(target).css('z-index', '-5');
+        },
+        textBoxMouseLeave(e) {
+            var target = e.target;
             $(target).css('z-index', '-5');
         },
         loadMore() {
@@ -209,6 +214,10 @@
                 description = $('#descriptionInput').val(),
                 tags = JSON.stringify($('#tagsInput').val().replace(/\, /g, ',').split(',')),
                 formData = new FormData();
+            if (!title || !description || !file) {
+                alert('Please fill in all fields!');
+                return;
+            }
             formData.append('file', file);
             this.model.upload({
                 title, description,
@@ -242,16 +251,17 @@
             var name = $('#nameInput').val(),
                 comment = $('#commentInput').val(),
                 view = this;
+            if(!name || !comment) {
+                alert('Please fill in all fields!');
+                return;
+            }
             this.commentModel.add({
                 name, comment,
                 image_id: this.id,
                 type: 'comment'
             });
             this.model.fetch();
-            this.model.on('change', () => {
-                view.render();
-                console.log("changed");
-            });
+            this.model.on('change', () => view.render());
         },
         reply(e) {
             var parent = $(e.target).parents()[3],
@@ -265,7 +275,7 @@
                 type: 'replyComment'
             });
             this.model.fetch();
-            this.model.on('change', () => view.render());
+            this.model.on('sync', () => view.render());
         },
         replyField(e) {
             var target = $(e.target.nextElementSibling);
