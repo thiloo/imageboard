@@ -31,12 +31,16 @@
             {{#this}}
             <div class="singleImageFlex">
             <div class="singleImageContainer" id="singleImageContainer">
-                <img class="singleImage" src="{{url}}" /><br /><h2 class="singleTitle">{{title}}</h2><p class="singleDescription">{{description}}</p>
+                <img class="singleImage" src="{{url}}" /><br />
+                <h2 class="singleTitle">{{title}}</h2>
+                <button id="likeButton" class="likeButton">{{likes}} Likes</button>
+                <p class="singleDescription">{{description}}</p>
                 <div id="tagsContainer">
                 {{#newTags}}
-                    <a href="/#tags/{{this}}">#{{this}}</a>
+                    <a href="/#tags/{{this}}">{{this}}</a>
                 {{/newTags}}
                 </div>
+
                 <div id="comments"></div>
             </div></div>
             {{/this}}
@@ -44,9 +48,9 @@
 
         <script type="text/handlebars" id="commentsView">
             <form class="commentForm">
-                <input type="text" required placeholder="Name" class="commentField" id="nameInput"/>
-                <input type="text" required placeholder="Comment" class="commentField" id="commentInput"/>
-                <input type="button" name="name" value="Submit Comment" id="submitButton">
+                <input type="text" required placeholder="Name" class="commentNameField" id="nameInput"/>
+                <input type="text" required placeholder="Comment" class="commentCommentField" id="commentInput"/>
+                <input type="button" name="name" value="Submit Comment" class="commentButton" id="submitButton">
             </form>
             <div id="commentList">
             {{#each this}}
@@ -56,7 +60,6 @@
                     <button type="button" class="replyButton" >Reply</button>
                     <div class="replies"></div>
                 </div>
-
             {{/each}}
             </div>
         </script>
@@ -64,9 +67,9 @@
         <script type="text/handlebars" id="replyBox">
             <div class="commentFormContainer">
                 <form class="commentForm" id="replyComment">
-                    <input type="text" required placeholder="Name" class="commentField" id="replyNameInput"/>
-                    <input type="text" required placeholder="Comment" class="commentField" id="replyCommentInput"/>
-                    <input type="button" name="name" value="Submit Comment" id="submitReplyButton">
+                    <input type="text" required placeholder="Name" class="commentNameField" id="replyNameInput"/>
+                    <input type="text" required placeholder="Comment" class="commentCommentField" id="replyCommentInput"/>
+                    <input type="button" name="name" value="Submit Comment" class="commentButton" id="submitReplyButton">
                 </form>
             </div>
         </script>
@@ -79,6 +82,12 @@
                 <input type="file" class="uploadField"> <br />
                 <input type="button" name="submit" value="Submit" class="uploadButton" id="submit"> <br />
             </form>
+        </script>
+
+        <script type="text/handlebars" id="reloadField">
+            <div class="reloadContainer" id="reloadNote">
+                <h2>There are new images, do you want to reload? Click me</h2>
+            </div>
         </script>
 
         <script src="js/handlebars.min.js"></script>

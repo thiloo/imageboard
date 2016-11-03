@@ -5,5 +5,6 @@ CREATE TABLE images(
     url VARCHAR(255) NOT NULL,
     title VARCHAR(255),
     description VARCHAR(255),
-    tags VARCHAR(255)
+    tags VARCHAR(255),
+    likes SMALLINT default 0
 );

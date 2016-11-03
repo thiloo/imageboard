@@ -103,22 +103,28 @@ body {
     width: auto;
 }
 
+.singleDescription {
+}
+
+.singleTitle {
+    display: inline;
+}
+
 #comments {
     height: 300px;
     width: auto;
     float: inherit;
     display: block;
-
 }
 
 .comment {
-    height: 60px;
+    min-height: 60px;
     width: auto;
     background-color: grey;
 }
 
 .replyComment {
-    height: 60px;
+    min-height: 60px;
     width: auto;
     background-color: lightgrey;
     padding-left: 20px;
@@ -139,6 +145,26 @@ body {
 
 .commentForm {
     display: block;
+    padding-top: 8px;
+}
+
+.commentNameField {
+    width: 150px;
+    height: 20px;
+    margin: 10px;
+}
+.commentCommentField {
+    width: 350px;
+    height: 20px;
+    margin: 10px;
+}
+
+.commentButton {
+    background-color: #F5A623;
+    color: #0000FF;
+    margin: 0 auto;
+    height: 30px;
+    width: auto;
 }
 
 #loadMore {
@@ -168,4 +194,10 @@ body {
     width: 150px;
     height: 20px;
     margin: 10px;
+}
+
+.likeButton {
+    background-color: #F5A623;
+    color: #0000FF;
+    margin-left: 150px;
 }
