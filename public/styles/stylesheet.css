@@ -41,16 +41,16 @@ body {
 .imageContainer {
     margin: 0 auto;
     width: 300px;
-    height: auto;
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 0;
+    height: 300px;
     position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    display: block;
 }
 
 .image {
-    width: 300px;
     height: 300px;
+    min-width: 300px;
     margin: 0;
     overflow: hidden;
 }
@@ -92,15 +92,21 @@ body {
 }
 
 .singleImageContainer {
+    margin: 0 auto;
     height: 600px;
     width: auto;
 }
 
-
 .singleImage {
+    display: block;
     margin: 0 auto;
     height: 400px;
     width: auto;
+}
+
+.imageInfo {
+    width: 650px;
+    margin: 0 auto;
 }
 
 .singleDescription {
@@ -149,12 +155,12 @@ body {
 }
 
 .commentNameField {
-    width: 150px;
+    width: 120px;
     height: 20px;
     margin: 10px;
 }
 .commentCommentField {
-    width: 350px;
+    width: 330px;
     height: 20px;
     margin: 10px;
 }

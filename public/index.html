@@ -32,16 +32,19 @@
             <div class="singleImageFlex">
             <div class="singleImageContainer" id="singleImageContainer">
                 <img class="singleImage" src="{{url}}" /><br />
-                <h2 class="singleTitle">{{title}}</h2>
-                <button id="likeButton" class="likeButton">{{likes}} Likes</button>
-                <p class="singleDescription">{{description}}</p>
-                <div id="tagsContainer">
-                {{#newTags}}
-                    <a href="/#tags/{{this}}">{{this}}</a>
-                {{/newTags}}
+                <div class="imageInfo">
+                    <h2 class="singleTitle">{{title}}</h2>
+                    <button id="likeButton" class="likeButton">{{likes}} Likes</button>
+                    <div id="tagsContainer">
+                    {{#newTags}}
+                        <a href="/#tags/{{this}}">{{this}}</a>
+                    {{/newTags}}
+                    </div>
+                    <p class="singleDescription">{{description}}</p>
+
+                    <div id="comments"></div>
                 </div>
 
-                <div id="comments"></div>
             </div></div>
             {{/this}}
         </script>
