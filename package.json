@@ -2,9 +2,9 @@
   "name": "imageboard",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec babel-node main.js"
   },
   "repository": {
     "type": "git",
@@ -17,14 +17,20 @@
   },
   "homepage": "https://github.com/spicedacademy/imageboard#readme",
   "dependencies": {
+    "babel-core": "^6.18.0",
     "body-parser": "^1.15.2",
     "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "faker": "^3.1.0",
     "multer": "^1.2.0",
     "pg": "^6.1.0",
     "redis": "^2.6.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
   }
 }

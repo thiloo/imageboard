@@ -1,0 +1,47 @@
+.contentContainer {
+    width: 100%;
+    height: 210px;
+    display: flex;
+    align-items: flex-start;
+
+}
+
+.adminImage {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+}
+
+.textContainer {
+    margin: 20px;
+    display: inline-block;
+
+}
+
+.commentsContainer {
+    display: inline-block;
+    height: 200px;
+    width: 600px;
+    overflow-y: auto;
+    background-color: lightgrey;
+    margin-bottom: 10px;
+}
+
+.updateButton {
+    background-color: lightblue;
+}
+
+.deleteButton {
+    background-color: red;
+}
+
+.updateCommentsButton {
+    background-color: green;
+}
+
+.loadMoreButton {
+    display: block;
+    margin: 0 auto;
+    background-color: #F5A623;
+    color: #0000FF;
+}

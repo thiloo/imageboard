@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Incredible Images</title>
+        <link rel="stylesheet" href="/styles/stylesheet.css" media="screen" title="no title">
+    </head>
+    <body>
+        <div id="header">
+            <a href="/"><img src="/media/logo.png" id="logo" /></a>
+            <a href="/#upload"><img src="/media/uploadbutton2.png" id="uploadLogo" /></a>
+        </div>
+        <div id="main">
+        </div>
+
+        <script type="text/handlebars" id="images">
+            <div class="flexContainer" id="flexHolder">
+            {{#images}}
+            <div class="imageContainer">
+                <a href="/#image/{{id}}"><img class="image" id="{{id}}" src="{{url}}" />
+                <div class="info"><h3 class="title">{{title}}</h3><br /><p class="description">{{description}}</p></div>
+                </a>
+            </div>
+            {{/images}}
+            {{#if button}}
+            <button id="loadMore">Load More</button></div>
+            {{/if}}
+        </script>
+
+        <script type="text/handlebars" id="singleImageView">
+            {{#this}}
+            <div class="singleImageFlex">
+            <div class="singleImageContainer" id="singleImageContainer">
+                <img class="singleImage" src="{{url}}" /><br />
+                <div class="imageInfo">
+                    <h2 class="singleTitle">{{title}}</h2>
+                    <button id="likeButton" class="likeButton">{{likes}} Likes</button>
+                    <div id="tagsContainer">
+                    {{#newTags}}
+                        <a href="/#tags/{{this}}">{{this}}</a>
+                    {{/newTags}}
+                    </div>
+                    <p class="singleDescription">{{description}}</p>
+
+                    <div id="comments"></div>
+                </div>
+
+            </div></div>
+            {{/this}}
+        </script>
+
+        <script type="text/handlebars" id="commentsView">
+            <form class="commentForm">
+                <input type="text" required placeholder="Name" class="commentNameField" id="nameInput"/>
+                <input type="text" required placeholder="Comment" class="commentCommentField" id="commentInput"/>
+                <input type="button" name="name" value="Submit Comment" class="commentButton" id="submitButton">
+            </form>
+            <div id="commentList">
+            {{#each this}}
+                <div class="{{type}}"  id="{{id}}">
+                    <h3 class="title">{{name}}</h3><br />
+                    <p class="description">{{comment}}</p>
+                    <button type="button" class="replyButton" >Reply</button>
+                    <div class="replies"></div>
+                </div>
+            {{/each}}
+            </div>
+        </script>
+
+        <script type="text/handlebars" id="replyBox">
+            <div class="commentFormContainer">
+                <form class="commentForm" id="replyComment">
+                    <input type="text" required placeholder="Name" class="commentNameField" id="replyNameInput"/>
+                    <input type="text" required placeholder="Comment" class="commentCommentField" id="replyCommentInput"/>
+                    <input type="button" name="name" value="Submit Comment" class="commentButton" id="submitReplyButton">
+                </form>
+            </div>
+        </script>
+
+        <script type="text/handlebars" id="uploadForm">
+            <form class="upload">
+                <input type="text" placeholder="title" class="uploadField" id="titleInput"> <br />
+                <input type="text" placeholder="description" class="uploadField" id="descriptionInput"> <br />
+                <input type="text" placeholder="tags" class="uploadField" id="tagsInput"> <br />
+                <input type="file" class="uploadField"> <br />
+                <input type="button" name="submit" value="Submit" class="uploadButton" id="submit"> <br />
+            </form>
+        </script>
+
+        <script type="text/handlebars" id="reloadField">
+            <div class="reloadContainer" id="reloadNote">
+                <h2>There are new images, do you want to reload? Click me</h2>
+            </div>
+        </script>
+
+        <script src="js/handlebars.min.js"></script>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/underscore-min.js"></script>
+        <script src="js/backbone-min.js"></script>
+        <script src="js/client.js"></script>
+    </body>
+</html>

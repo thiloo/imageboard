@@ -1,0 +1,209 @@
+body {
+    margin: 0;
+}
+
+#header {
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    background-color: blue;
+    margin-bottom: 10px;
+    z-index: 20;
+}
+
+#main {
+    top: 50px;
+    position: absolute;
+    width: 100vw;
+    height: auto;
+}
+
+#logo {
+    height: 40px;
+    margin-left: 20px;
+}
+
+#uploadLogo {
+    height: 40px;
+    float: right;
+    margin-right: 20px;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+.imageContainer {
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.image {
+    height: 300px;
+    min-width: 300px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.infoContainer {
+    height: 300px;
+    width: 300px;
+}
+
+.info {
+    position: absolute;
+    z-index: -1;
+    bottom: 0px;
+    height: 80px;
+    width: 300px;
+    background-color: black;
+    color: white;
+    opacity: 0.7;
+    margin-bottom: 3px;
+}
+
+.title {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.description {
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+    width: 300px;
+    overflow: hidden;
+}
+
+.singleImageFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.singleImageContainer {
+    margin: 0 auto;
+    height: 600px;
+    width: auto;
+}
+
+.singleImage {
+    display: block;
+    margin: 0 auto;
+    height: 400px;
+    width: auto;
+}
+
+.imageInfo {
+    width: 650px;
+    margin: 0 auto;
+}
+
+.singleDescription {
+}
+
+.singleTitle {
+    display: inline;
+}
+
+#comments {
+    height: 300px;
+    width: auto;
+    float: inherit;
+    display: block;
+}
+
+.comment {
+    min-height: 60px;
+    width: auto;
+    background-color: grey;
+}
+
+.replyComment {
+    min-height: 60px;
+    width: auto;
+    background-color: lightgrey;
+    padding-left: 20px;
+}
+
+.replyButton {
+    margin-top: -20px;
+    background: red;
+    float: right;
+}
+
+.commentFormContainer {
+    width: auto;
+    height: 60px;
+    background-color: blue;
+    display: block;
+}
+
+.commentForm {
+    display: block;
+    padding-top: 8px;
+}
+
+.commentNameField {
+    width: 120px;
+    height: 20px;
+    margin: 10px;
+}
+.commentCommentField {
+    width: 330px;
+    height: 20px;
+    margin: 10px;
+}
+
+.commentButton {
+    background-color: #F5A623;
+    color: #0000FF;
+    margin: 0 auto;
+    height: 30px;
+    width: auto;
+}
+
+#loadMore {
+    display: block;
+    background-color: #F5A623;
+    color: #0000FF;
+    width: 40%;
+    margin: 0 auto;
+    height: 50px;
+}
+
+.uploadButton {
+    display: block;
+    background-color: #F5A623;
+    color: #0000FF;
+    margin: 0 auto;
+    height: 50px;
+    width: 100px;
+}
+
+.upload {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.uploadField {
+    width: 150px;
+    height: 20px;
+    margin: 10px;
+}
+
+.likeButton {
+    background-color: #F5A623;
+    color: #0000FF;
+    margin-left: 150px;
+}
